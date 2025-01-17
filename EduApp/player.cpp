@@ -97,7 +97,7 @@ void Player::move(Direction d) {
         break;
       case Direction::right:
         if(xPos < 650) {
-            desiredXVel = +5;
+            desiredXVel = +8;
         }
         break;
       case Direction::up:  desiredYVel = -10; playerState = State::jumping; break;
@@ -158,6 +158,9 @@ int Player::yPos() {
  * etc. Makes appropriate changes.
  */
 void Player::update(map<int, WordBox> &boxes) {
+    // try to encourage the player to stay more in the middle
+    if(body->GetPosition().x < 0.0f)
+        playerState = State::running;
     // if jumping check if player hit ground
     if(playerState == State::jumping &&
             body->GetLinearVelocity().y > 0 && body->GetPosition().y >= 15.0f)

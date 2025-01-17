@@ -22,7 +22,7 @@
  * @param parent
  */
 SceneWidget::SceneWidget(QWidget *parent) : QWidget(parent),
-    world(b2Vec2(0.0f, 10.0f)),
+    world(b2Vec2(0.0f, 20.0f)),
     player(&world),
     l1(&world, &player),
     l2(&world, &player),
@@ -70,6 +70,26 @@ SceneWidget::SceneWidget(QWidget *parent) : QWidget(parent),
     // Add the ceiling fixture to the ceiling body.
     ceilingBody->CreateFixture(&ceilingBox, 0.0f);
     /** end creating ceiling **/
+
+    /** start creating left wall **/
+    b2BodyDef leftWallBodyDef;
+    leftWallBodyDef.position.Set(-2.5f, 10.0f);  // Adjust x position for left edge
+
+    b2Body* leftWallBody = world.CreateBody(&leftWallBodyDef);
+    b2PolygonShape leftWallBox;
+    leftWallBox.SetAsBox(0.5f, 20.0f);
+    leftWallBody->CreateFixture(&leftWallBox, 0.0f);
+    /** end creating left wall **/
+
+    /** start creating right wall **/
+    b2BodyDef rightWallBodyDef;
+    rightWallBodyDef.position.Set(32.5f, 10.0f);  // Adjust x position for right edge
+
+    b2Body* rightWallBody = world.CreateBody(&rightWallBodyDef);
+    b2PolygonShape rightWallBox;
+    rightWallBox.SetAsBox(0.5f, 20.0f);
+    rightWallBody->CreateFixture(&rightWallBox, 0.0f);
+    /** end creating right wall **/
 
     printf("Init world\n");
 
